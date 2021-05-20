@@ -125,6 +125,9 @@ public class SponsorBlockSettings {
             segment.behaviour = behaviour;
             if (behaviour.showOnTimeBar)
                 enabledCategories.add(segment.key);
+
+            String tmp = preferences.getString(segment.key + "_color", String.valueOf(segment.color));
+            segment.setColor(Integer.parseInt(tmp));
         }
 
         //"[%22sponsor%22,%22outro%22,%22music_offtopic%22,%22intro%22,%22selfpromo%22,%22interaction%22]";
@@ -201,8 +204,8 @@ public class SponsorBlockSettings {
         public final StringRef title;
         public final StringRef skipMessage;
         public final StringRef description;
-        public final int color;
         public final Paint paint;
+        public int color;
         public SegmentBehaviour behaviour;
         private CharSequence lazyTitleWithDot;
 
@@ -219,8 +222,7 @@ public class SponsorBlockSettings {
             this.description = description;
             this.behaviour = behaviour;
             this.color = color & 0xFFFFFF;
-            paint = new Paint();
-            paint.setColor(color);
+            this.paint = new Paint();
         }
 
         public static SegmentInfo[] valuesWithoutPreview() {
@@ -229,6 +231,12 @@ public class SponsorBlockSettings {
 
         public static SegmentInfo byCategoryKey(String key) {
             return mValuesMap.get(key);
+        }
+
+        public void setColor(int color) {
+            this.color = color;
+            paint.setColor(color);
+            paint.setAlpha(255);
         }
 
         public CharSequence getTitleWithDot() {

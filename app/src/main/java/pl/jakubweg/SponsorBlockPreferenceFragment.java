@@ -165,7 +165,16 @@ public class SponsorBlockPreferenceFragment extends PreferenceFragment implement
             preference.setDefaultValue(defaultValue);
             preference.setEntries(entries);
             preference.setEntryValues(entryValues);
+
+            EditTextPreference colorPreference = new EditTextPreference(context);
+            colorPreference.setTitle("Set " + segmentInfo.title + " color");
+            colorPreference.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+            colorPreference.setKey(segmentInfo.key + "_color");
+            colorPreference.setDefaultValue(segmentInfo.color);
+            preferencesToDisableWhenSBDisabled.add(colorPreference);
+
             category.addPreference(preference);
+            category.addPreference(colorPreference);
         }
 
     }
